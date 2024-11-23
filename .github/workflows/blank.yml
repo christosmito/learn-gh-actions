@@ -35,21 +35,60 @@
 
 # ----------------------------------------------
 
-name: Events Demo
-on: push
+# name: Events Demo
+# on:
+#   push:
+#     branches:
+#       - main
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Output event data
+#         run: echo "${{ toJSON(github.event) }}"
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Install dependencies
+#         run: npm ci
+#       - name: Test code
+#         run: npm run test
+#       - name: Build code
+#         run: npm run build
+#       - name: Deploy Project
+#         run: echo "Deploy project"
+
+# ----------------------------------------------
+
+name: Deploy website
+on:
+  push:
+    branches:
+      - main
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Output event data
-        run: echo "${{ toJSON(github.event) }}"
       - name: Get code
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm ci
+      - name: Lint code
+        run: npm run lint
       - name: Test code
         run: npm run test
-      - name: Build code
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
         run: npm run build
-      - name: Deploy Project
-        run: echo "Deploy project"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
