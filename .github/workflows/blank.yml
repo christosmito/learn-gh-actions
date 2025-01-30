@@ -120,5 +120,7 @@ name: Academind course
 
 on: push
 jobs:
-  steps:
-    - run: echo "Hello world"
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello world"
