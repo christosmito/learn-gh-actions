@@ -149,7 +149,14 @@ jobs:
           name: dist
           path: dist
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+      - name: List content
+        run: ls
       - name: Deploy
         run: echo "Deployed"
