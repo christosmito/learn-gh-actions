@@ -118,7 +118,11 @@
 
 name: Academind course
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -129,7 +133,12 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
-  deploy:
+      - name: build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+  build:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -139,5 +148,8 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
         run: echo "Deployed"
