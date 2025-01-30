@@ -133,11 +133,6 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
-      - name: build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -148,6 +143,11 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+      - name: build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
   deploy:
     runs-on: ubuntu-latest
     steps:
