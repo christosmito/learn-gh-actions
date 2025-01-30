@@ -119,3 +119,6 @@
 name: Academind course
 
 on: push
+jobs:
+  steps:
+    - run: echo "Hello world"
