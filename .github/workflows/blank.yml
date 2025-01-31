@@ -170,3 +170,13 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deployed"
+      - name: Deploy to Hetzner VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ls
+            whoami
+            pwd
