@@ -178,7 +178,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/cgoulas
-            mkdir actions
-            cd actions
-            touch temp.py
+            # Navigate to the 'dev' directory
+            cd /home/cgoulas/dev
+
+            # Check if 'siftlink' directory exists, if not create it
+            if [ ! -d "siftlink" ]; then
+              mkdir siftlink
+            fi
+
+            # Navigate into 'siftlink' directory
+            cd siftlink
+
+            # Check if 'siftlink-frontend' directory exists, if not create it
+            if [ ! -d "siftlink-frontend" ]; then
+              mkdir siftlink-frontend
+            fi
+
+            # Navigate into 'siftlink-frontend' directory
+            cd siftlink-frontend
+
+            echo "Ready to copy code from GitHub Actions workspace!"
